@@ -1,0 +1,34 @@
+$buttonColor: rgba(#fff, 0.5);
+$buttonColorHover: rgba(#fff, 0.7);
+
+.board- {
+  &header {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+  }
+}
+
+.board-header > a,
+p {
+  margin-right: 5px;
+  font-size: 18px;
+  border-radius: 3px;
+  padding: 5px 5px;
+  background-color: $buttonColor;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: $buttonColorHover;
+  }
+}
+
+.lists {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 10px;
+
+  &-button {
+    height: fit-content;
+  }
+}

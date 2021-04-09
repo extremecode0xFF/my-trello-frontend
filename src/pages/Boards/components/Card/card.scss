@@ -1,0 +1,9 @@
+$card-bg-color: white;
+
+.card {
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.2);
+  background-color: $card-bg-color;
+  border-radius: 3px;
+  padding: 0 5px;
+  margin-bottom: 10px;
+}
