@@ -1,10 +1,6 @@
 import React from 'react';
 import './card.scss';
 
-interface C {
-  title: string;
-}
-
-export default function Card({ title }: C): React.ReactElement {
+export default function Card({ title }: { title: string }): React.ReactElement {
   return <li className="card">{title}</li>;
 }

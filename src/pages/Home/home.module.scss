@@ -1,0 +1,14 @@
+.title{
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.borders{
+  display: grid;
+  grid-template-columns: repeat(4,.2fr);
+  grid-gap: 20px;
+  //justify-items: center;
+  justify-content: center;
+  color: black;
+}
