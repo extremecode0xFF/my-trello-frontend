@@ -1,4 +1,5 @@
 import React, { Component, ReactElement } from 'react';
+// import { withRouter } from 'react-router-dom';
 import { IList } from '../../common/interfaces/IList';
 import List from './components/List/List';
 import './board.scss';
@@ -47,6 +48,9 @@ export default class Board extends Component<Record<string, never>, BoardState> 
 
   render(): ReactElement {
     const { title } = this.state;
+    // const {
+    //   match: { params },
+    // } = this.props;
     return (
       <>
         <div className="board-header">
@@ -61,3 +65,5 @@ export default class Board extends Component<Record<string, never>, BoardState> 
     );
   }
 }
+
+// export default withRouter(Board);
