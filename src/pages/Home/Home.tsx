@@ -1,31 +1,28 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'; //
 import { IBoard } from '../../common/interfaces/IBoard';
 import Board from './components/Board/Board';
 import style from './home.module.scss';
+import { getBoards } from '../../store/modules/boards/actions';
 
-interface IBoards {
+interface StateType {
   boards: IBoard[];
 }
 
-type Props = Record<string, never>;
+type PropsType = {
+  boards: IBoard[];
+  getBoards: () => Promise<void>;
+};
 
-export default class Home extends React.Component<Props, IBoards> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      boards: [
-        { id: 1, title: 'покупки' },
-        { id: 2, title: 'подготовка к свадьбе' },
-        { id: 3, title: 'разработка интернет-магазина' },
-        { id: 4, title: 'курс по продвижению в соцсетях' },
-        { id: 5, title: 'ревью' },
-      ],
-    };
+class Home extends React.Component<PropsType, StateType> {
+  async componentDidMount(): Promise<void> {
+    // eslint-disable-next-line react/destructuring-assignment
+    await this.props.getBoards();
   }
 
   makeBoards(): ReactElement[] {
-    const { boards } = this.state;
+    const { boards } = this.props;
     return boards.map((board) => (
       <Link key={board.id} to={`/board/${board.id}`}>
         <Board {...board} />
@@ -45,3 +42,7 @@ export default class Home extends React.Component<Props, IBoards> {
     );
   }
 }
+
+const mapStateToProps = (state: StateType): IBoard[] => ({ ...state.boards });
+
+export default connect(mapStateToProps, { getBoards })(Home);

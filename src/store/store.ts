@@ -5,7 +5,7 @@ import { BoardsState } from './modules/boards/reducer';
 import { UserState } from './modules/user/reducer';
 
 export interface AppState {
-  board: BoardState; // эти интерфейсы нужно описать в редьюсерах соответствующих
+  board: BoardState;
   boards: BoardsState;
   user: UserState;
 }
