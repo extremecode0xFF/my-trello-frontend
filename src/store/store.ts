@@ -1,8 +1,9 @@
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './reducer';
+import thunk from 'redux-thunk';
+import rootReducer from './rootReducer';
 import { BoardState } from './modules/board/reducer';
-import { BoardsState } from './modules/boards/reducer';
+import { BoardsState } from './types/boards';
 import { UserState } from './modules/user/reducer';
 
 export interface AppState {
@@ -13,11 +14,11 @@ export interface AppState {
 
 const initialState: AppState = {
   board: { users: [], lists: [] },
-  boards: { boards: [] },
+  boards: { boards: [], isLoading: false, error: null },
   user: { user: [] },
 };
 
-const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware()));
+const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk)));
 
 export const asyncDispatch = store.dispatch;
 export default store;

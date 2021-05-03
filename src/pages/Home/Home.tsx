@@ -4,7 +4,8 @@ import { connect } from 'react-redux'; //
 import { IBoard } from '../../common/interfaces/IBoard';
 import Board from './components/Board/Board';
 import style from './home.module.scss';
-import { getBoards } from '../../store/modules/boards/actions';
+import { addBoards, getBoards } from '../../store/modules/boards/actions';
+import { AppState } from '../../store/store';
 
 interface StateType {
   boards: IBoard[];
@@ -13,6 +14,7 @@ interface StateType {
 type PropsType = {
   boards: IBoard[];
   getBoards: () => Promise<void>;
+  addBoards: () => Promise<void>;
 };
 
 class Home extends React.Component<PropsType, StateType> {
@@ -21,11 +23,16 @@ class Home extends React.Component<PropsType, StateType> {
     await this.props.getBoards();
   }
 
+  addBoards = async (): Promise<void> => {
+    // eslint-disable-next-line react/destructuring-assignment
+    await this.props.addBoards();
+  };
+
   makeBoards(): ReactElement[] {
     const { boards } = this.props;
-    return boards.map((board) => (
-      <Link key={board.id} to={`/board/${board.id}`}>
-        <Board {...board} />
+    return boards?.map((board) => (
+      <Link to={`/board/${board.id}`} key={board.id}>
+        <Board title={board.title} />
       </Link>
     ));
   }
@@ -36,13 +43,13 @@ class Home extends React.Component<PropsType, StateType> {
         <h2 className={style.title}>Мои Доски</h2>
         <div className={style.borders}>
           {this.makeBoards()}
-          <button>Создать доску+</button>
+          <button onClick={this.addBoards}>Создать доску+</button>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: StateType): IBoard[] => ({ ...state.boards });
+const mapStateToProps = (state: AppState): IBoard[] => ({ ...state.boards.boards });
 
-export default connect(mapStateToProps, { getBoards })(Home);
+export default connect(mapStateToProps, { getBoards, addBoards })(Home);
