@@ -18,7 +18,7 @@ export default function App(): ReactElement {
           </ul>
         </nav>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route path="/" component={Home} exact />
           <Route path="/board/:id" component={Board} />
         </Switch>
       </div>

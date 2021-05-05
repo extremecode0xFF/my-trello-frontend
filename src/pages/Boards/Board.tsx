@@ -1,16 +1,21 @@
 import React, { Component, ReactElement } from 'react';
-// import { withRouter } from 'react-router-dom';
+import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
+
+import style from './board.module.scss';
 import { IList } from '../../common/interfaces/IList';
 import List from './components/List/List';
-import './board.scss';
 
 interface BoardState {
   title: string;
   lists: IList[];
 }
 
-export default class Board extends Component<Record<string, never>, BoardState> {
-  constructor(props: Record<string, never>) {
+interface MatchParams {
+  id: string;
+}
+
+class Board extends Component<RouteComponentProps<MatchParams>, BoardState> {
+  constructor(props: RouteComponentProps<MatchParams>) {
     super(props);
     this.state = {
       title: 'Моя тестовая доска',
@@ -51,19 +56,21 @@ export default class Board extends Component<Record<string, never>, BoardState> 
     // const {
     //   match: { params },
     // } = this.props;
+    // // eslint-disable-next-line no-console
+    // console.log(params);
     return (
       <>
-        <div className="board-header">
-          <a className="board-button_home">Домой</a>
-          <p className="board-title">{title}</p>
+        <div className={style.header}>
+          <Link to="/">Домой</Link>
+          <p>{title}</p>
         </div>
-        <div className="lists">
+        <div className={style.lists}>
           {this.makeLists()}
-          <button className="lists-button">Добавить Список</button>
+          <button className={style.buttonAddList}> + Добавить список</button>
         </div>
       </>
     );
   }
 }
 
-// export default withRouter(Board);
+export default withRouter(Board);

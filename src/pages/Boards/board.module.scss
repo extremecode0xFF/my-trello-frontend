@@ -1,0 +1,45 @@
+@import "./src/common/constants/style";
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+
+  & > * {
+    margin-right: 5px;
+    font-size: 18px;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: $color-board-header-default;
+    color: white;
+    cursor: pointer;
+    transition: 150ms ease-in-out;
+
+    &:hover {
+      background-color: $color-board-header-hover;
+    }
+  }
+}
+
+.lists {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 10px;
+
+  & > button {
+    height: fit-content;
+  }
+}
+
+.buttonAddList {
+  color: white;
+  border: none;
+  background-color: $color-board-header-default;
+  padding: 5px;
+  border-radius: 3px;
+  transition: 150ms;
+  font-size: 15px;
+  &:hover {
+    background-color: $color-board-header-hover;
+  }
+}

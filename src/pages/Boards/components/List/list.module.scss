@@ -1,0 +1,30 @@
+@import "./src/common/constants/style";
+
+.list {
+  background-color: $color-list;
+  border-radius: 3px;
+  padding: 10px 10px;
+  height: fit-content;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.cards {
+  list-style-type: none;
+  padding: 0;
+}
+
+.buttonAddCard {
+  background: none;
+  border: none;
+  border-radius: 3px;
+  width: 100%;
+  font-size: 15px;
+  padding: 5px;
+  transition: 150ms ease-in-out;
+  &:hover {
+    background-color: rgba(grey, 0.2);
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
-import './card.scss';
+import style from './card.module.scss';
 
 export default function Card({ title }: { title: string }): React.ReactElement {
-  return <li className="card">{title}</li>;
+  return <li className={style.card}>{title}</li>;
 }
