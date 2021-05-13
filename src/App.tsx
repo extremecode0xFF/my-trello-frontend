@@ -13,7 +13,7 @@ export default function App(): ReactElement {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/board">Board</Link>
+              <Link to="/board/:id">Board</Link>
             </li>
           </ul>
         </nav>

@@ -57,7 +57,7 @@
     "no-alert": "error",
     "eol-last": "error",
     "semi": "error",
-    "no-console": "error"
+    "no-console": "warn"
   },
   "overrides": []
 }

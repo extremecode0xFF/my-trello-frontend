@@ -16,7 +16,7 @@
 
 .button {
   background-color: $color-board-header-default;
-  height: 25%;
+  height: inherit;
   border: none;
   border-radius: 3px;
   transition: 150ms;
