@@ -1,4 +1,8 @@
 export interface ICard {
-  id: number;
   title: string;
+  id: number;
+  description: string;
+  users: [];
+  created_at: number;
+  position: number;
 }

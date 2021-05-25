@@ -1,5 +1,8 @@
-import { ICard } from './ICard';
+import { ICards } from './ICards';
 
-export interface IList extends ICard {
-  cards: ICard[];
+export interface IList {
+  title: string;
+  cards: ICards;
+  id: number;
+  position: number;
 }

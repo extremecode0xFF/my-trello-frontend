@@ -1,0 +1,27 @@
+@import './src/common/constants/style';
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.composerControl{
+  display: flex;
+  flex-direction: column;
+}
+
+.hide{
+  display: none;
+}
+
+.button{
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  background-color: $color-board-header-default;
+  color: white;
+  font-size: 15px;
+  &:hover {
+    background-color: $color-board-header-hover;
+  }
+}

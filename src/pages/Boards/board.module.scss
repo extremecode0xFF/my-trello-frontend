@@ -14,17 +14,38 @@
     color: white;
     cursor: pointer;
     transition: 150ms ease-in-out;
-
     &:hover {
       background-color: $color-board-header-hover;
     }
+  }
+  & button{
+    border: none;
+    height: 100%;
+  }
+}
+
+.header input {
+  font-weight: bold;
+  border: none;
+  color: white;
+  background-color: rgba($color-board-header-default, 0);
+  cursor: pointer;
+  transition-property: padding-left, padding-right;
+  transition-duration: .3s;
+
+  &:focus {
+    padding: 0 5px;
+    border-radius: 0;
+    cursor: text;
+    color: black;
+    background-color: white;
   }
 }
 
 .lists {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 10px;
+  grid-gap: 15px;
 
   & > button {
     height: fit-content;
@@ -39,6 +60,7 @@
   border-radius: 3px;
   transition: 150ms;
   font-size: 15px;
+
   &:hover {
     background-color: $color-board-header-hover;
   }

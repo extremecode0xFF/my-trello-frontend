@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import style from './modal.module.scss';
 
 interface PropsType {
   active: boolean;
   setActive: (value: boolean) => void;
-  children: ReactElement | null;
+  children: ReactNode | null;
 }
 
 const Modal = ({ active, setActive, children }: PropsType): ReactElement => (

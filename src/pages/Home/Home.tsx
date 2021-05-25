@@ -5,10 +5,10 @@ import { AppState } from '../../store/store';
 import { IBoard } from '../../common/interfaces/IBoard';
 import Board from './components/Board/Board';
 import Modal from './components/Modal/Modal';
+import Content from './components/Modal/Content/Content';
 import { getBoards } from '../../store/modules/boards/actions';
 import { setModalActive } from '../../store/modules/modal/action';
 import style from './home.module.scss';
-import Content from './components/Modal/Content/Content';
 
 type PropsType = {
   boards: IBoard[];
@@ -28,7 +28,7 @@ class Home extends Component<PropsType> {
     await asyncGetBoards();
   }
 
-  onClickAddBoard = async (): Promise<void> => {
+  onClickAddBoard = (): void => {
     setModalActive(true);
   };
 

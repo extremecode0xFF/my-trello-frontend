@@ -1,11 +1,14 @@
 import React, { ReactElement } from 'react';
 import Card from '../Card/Card';
-import { IList } from '../../../../common/interfaces/IList';
-import { ICard } from '../../../../common/interfaces/ICard';
 import style from './list.module.scss';
+import { ICards } from '../../../../common/interfaces/ICards';
+import { IList } from '../../../../common/interfaces/IList';
 
-function makeCard(cards: ICard[]): ReactElement[] {
-  return cards.map((card) => <Card key={card.id.toString()} title={card.title} />);
+function makeCard(cards: ICards): ReactElement[] {
+  return Object.keys(cards).map((value) => {
+    const card = cards[value];
+    return <Card key={card.id.toString()} {...card} />;
+  });
 }
 
 export default function List({ title, cards }: IList): ReactElement {
