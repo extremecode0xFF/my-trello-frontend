@@ -1,0 +1,14 @@
+@import "../../common/constants/style";
+
+.hide {
+  display: none;
+}
+
+.modifierTitle{
+  cursor: pointer;
+}
+
+.modifierEditArea{
+  outline-color: $color-edit;
+  resize: none;
+}

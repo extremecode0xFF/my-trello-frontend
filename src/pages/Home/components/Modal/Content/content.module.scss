@@ -1,17 +1,27 @@
-.content{
-  width: 100%;
-  height: 100%;
+@import "./src/common/constants/style";
+
+.content {
   display: flex;
   flex-direction: column;
+  row-gap: 10px;
   justify-content: space-between;
   align-items: center;
+  width: 25vw;
 }
 
-.text{
-  width: inherit;
-  resize: none;
+.text input {
+  outline-color: $color-edit;
 }
 
-.buttonCreate{
+.buttonCreate {
+  color: white;
+  background-color: $color-edit;
+  border-radius: 3px;
+  border: none;
+  padding: 8px;
+  transition: .3s;
 
+  &:hover {
+    background-color: $color-edit-hover;
+  }
 }

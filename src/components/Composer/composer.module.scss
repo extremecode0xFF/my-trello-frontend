@@ -1,0 +1,55 @@
+@import '../../common/constants/style';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-list;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.textArea {
+  margin-bottom: 5px;
+  resize: none;
+  outline-color: $color-edit;
+}
+
+.hide {
+  display: none;
+}
+
+.buttonAdd {
+  color: white;
+  background-color: $color-edit;
+  border-radius: 3px;
+  border: none;
+  padding: 8px;
+  transition: .3s;
+
+  &:hover {
+    background-color: $color-edit-hover;
+  }
+}
+
+.buttonCancel {
+  color: $color-edit-cancel;
+  font-size: 14px;
+  border: none;
+  background: none;
+  height: fit-content;
+  transition: .3s;
+
+  &:hover {
+    color: $color-edit-cancel-hover;
+  }
+}
+
+.control {
+  display: flex;
+  align-items: center;
+}

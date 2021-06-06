@@ -5,15 +5,46 @@
   border-radius: 3px;
   padding: 10px 10px;
   height: fit-content;
+  width: 250px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
 }
 
 .title {
-  margin-bottom: 10px;
+  width: 100%;
+  font-weight: bold;
 }
 
 .cards {
   list-style-type: none;
   padding: 0;
+}
+
+.buttonRemoveList {
+  display: flex;
+  padding: 0;
+  border: none;
+  height: fit-content;
+  border-radius: 3px;
+  transition: .3s;
+
+  &:hover {
+    background-color: $color-button-background-remove-hover;
+  }
+
+  &:active {
+    background-color: $color-button-background-remove-active;
+    color: $color-button-remove-active;
+  }
+}
+
+.icon {
+  font-size: 21px;
 }
 
 .buttonAddCard {
@@ -24,6 +55,7 @@
   font-size: 15px;
   padding: 5px;
   transition: 150ms ease-in-out;
+
   &:hover {
     background-color: rgba(grey, 0.2);
   }

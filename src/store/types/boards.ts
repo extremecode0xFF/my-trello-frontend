@@ -10,20 +10,42 @@ export enum BoardsActionTypes {
   UPDATE_BOARDS = 'UPDATE_BOARDS',
   UPDATE_BOARDS_SUCCESS = 'UPDATE_BOARDS_SUCCESS',
   UPDATE_BOARDS_ERROR = 'UPDATE_BOARDS_ERROR',
+  ADD_BOARDS = 'ADD_BOARDS',
+  ADD_BOARDS_SUCCESS = 'ADD_BOARDS_SUCCESS',
+  ADD_BOARDS_ERROR = 'ADD_BOARDS_ERROR',
 }
 
-interface ActionInit {
+interface ActionUpdateBoards {
   type: BoardsActionTypes.UPDATE_BOARDS;
 }
 
-interface ActionSuccess {
+interface ActionUpdateBoardsSuccess {
   type: BoardsActionTypes.UPDATE_BOARDS_SUCCESS;
   payload: IBoard[];
 }
 
-interface ActionError {
+interface ActionUpdateBoardsError {
   type: BoardsActionTypes.UPDATE_BOARDS_ERROR;
   payload: string;
 }
 
-export type BoardsAction = ActionInit | ActionSuccess | ActionError;
+interface ActionAddBoards {
+  type: BoardsActionTypes.ADD_BOARDS;
+}
+
+interface ActionAddBoardsSuccess {
+  type: BoardsActionTypes.ADD_BOARDS_SUCCESS;
+}
+
+interface ActionAddBoardsError {
+  type: BoardsActionTypes.ADD_BOARDS_ERROR;
+  payload: string;
+}
+
+export type BoardsAction =
+  | ActionUpdateBoards
+  | ActionUpdateBoardsSuccess
+  | ActionUpdateBoardsError
+  | ActionAddBoards
+  | ActionAddBoardsSuccess
+  | ActionAddBoardsError;

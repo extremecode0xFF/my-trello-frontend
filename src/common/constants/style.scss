@@ -1,8 +1,16 @@
 //BOARDS
 $color-boards-default: #ebecf0;
 $color-boards-hover: rgba($color-boards-default,.9);
+$color-button-background-remove-hover: rgba(grey, .5);
+$color-button-background-remove-active: rgba(9, 30, 66, .13);
+$color-button-remove-hover: #6b778c;
+$color-button-remove-active: #172b4d;
 //BOARD
 $color-board-header-default: rgba(#fff, 0.3);
 $color-board-header-hover: rgba($color-board-header-default, 0.5);
+$color-edit: #0079bf;
+$color-edit-hover: #026aa7;
+$color-edit-cancel: #6b778c;
+$color-edit-cancel-hover: #172b4d;
 //LIST
 $color-list: #ebecf0;

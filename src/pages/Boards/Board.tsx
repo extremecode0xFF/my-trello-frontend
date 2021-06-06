@@ -3,16 +3,13 @@ import AutosizeInput from 'react-input-autosize';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addList, deleteBoard, editBoardTitle, getBoard, setBoardTitle } from '../../store/modules/board/actions';
-import style from './board.module.scss';
+import List from './components/List/List';
+import Composer from '../../components/Composer/Composer';
+import validator, { pattern } from '../../common/validator/validator';
 import { AppState } from '../../store/store';
 import { IBoardFull } from '../../common/interfaces/IBoardFull';
-import List from './components/List/List';
-import { Composer } from './components/Composer/Composer';
-
-interface IData {
-  title: string;
-  position: number;
-}
+import { IDataList } from '../../common/constants/api';
+import style from './board.module.scss';
 
 interface StateProps {
   board: IBoardFull;
@@ -25,18 +22,17 @@ interface DispatchProps {
   setBoardTitle: (id: string, newTitle: string) => void;
   editBoardTitle: (newTitle: string) => void;
   deleteBoard: (id: string) => void;
-  addList: (id: string, data: IData) => void;
+  addList: (id: string, data: IDataList) => void;
 }
 
-type Props = RouteComponentProps<{ id: string }>;
+type RouteProps = RouteComponentProps<{ id: string }>;
 
-type PropsType = StateProps & DispatchProps & Props;
+type PropsType = StateProps & DispatchProps & RouteProps;
 
 class Board extends Component<PropsType> {
   componentDidMount(): void {
-    const { id } = this.props;
-    const { getBoard: getAsyncBoard } = this.props;
-    getAsyncBoard(id);
+    const { getBoard: asyncGetBoard } = this.props;
+    asyncGetBoard(this.getBoardID());
   }
 
   getBoardID = (): string => {
@@ -44,47 +40,36 @@ class Board extends Component<PropsType> {
     return id;
   };
 
-  setTitle = (title: string): void => {
-    const { setBoardTitle: setBoardTitle1 } = this.props;
-    setBoardTitle1(this.getBoardID(), title);
-  };
-
-  getBoard = (): void => {
-    const { getBoard: getBoard1 } = this.props;
-    getBoard1(this.getBoardID());
-  };
-
   handlerFocusIn = (event: FocusEvent<HTMLInputElement>): void => {
     event.target.select();
   };
 
   handlerFocusOut = (event: FocusEvent<HTMLInputElement>): void => {
-    this.setTitle(event.target.value);
-  };
-
-  handlerChangeTitle = (event: ChangeEvent<HTMLInputElement>): void => {
-    editBoardTitle(event.target.value);
-  };
-
-  handlerClickEnter = (event: KeyboardEvent<HTMLInputElement>): void => {
-    const { value, blur } = event.currentTarget;
-    if (event.key === 'Enter') {
-      this.setTitle(value);
-      blur();
+    const title = event.target.value.trim();
+    const { board } = this.props;
+    if (title && title !== board.title) {
+      const { setBoardTitle: asyncSetTitle } = this.props;
+      asyncSetTitle(this.getBoardID(), title);
+    } else {
+      editBoardTitle(board.title);
     }
   };
 
-  dBoard = (): void => {
-    const { deleteBoard: deleteBoard1 } = this.props;
-    deleteBoard1(this.getBoardID());
-    // eslint-disable-next-line react/destructuring-assignment
-    // this.props.history.push('/');
+  handlerChangeTitle = (event: ChangeEvent<HTMLInputElement>): void => {
+    if (validator(pattern, event.target.value)) {
+      editBoardTitle(event.target.value);
+    }
   };
 
-  addNewList = (data: IData): void => {
-    const { addList: asyncAddList, getBoard: asyncGetBoard } = this.props;
-    asyncAddList(this.getBoardID(), data);
-    asyncGetBoard(this.getBoardID());
+  handlerClickEnter = (event: KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+      event.currentTarget.blur();
+    }
+  };
+
+  handlerDeleteBoard = (): void => {
+    const { deleteBoard: dispatchDeleteBoard } = this.props;
+    dispatchDeleteBoard(this.getBoardID());
   };
 
   makeLists(): ReactElement[] {
@@ -100,6 +85,7 @@ class Board extends Component<PropsType> {
     const {
       inputs: { title },
     } = this.props;
+
     return (
       <>
         <div className={style.header}>
@@ -110,25 +96,28 @@ class Board extends Component<PropsType> {
             onFocus={this.handlerFocusIn}
             onBlur={this.handlerFocusOut}
             onChange={this.handlerChangeTitle}
-            onKeyUp={this.handlerClickEnter}
+            onKeyPress={this.handlerClickEnter}
             value={title}
           />
-          <button onClick={this.dBoard}>Удалить доску</button>
+          <a onClick={this.handlerDeleteBoard}>Удалить доску</a>
         </div>
-        <div className={style.lists}>
-          <Composer
-            buttonTitle="Добавить список"
-            placeholder="Ввести заголовок для этой карточки"
-            addList={this.addNewList}
-          />
-          {this.makeLists()}
+        <div className={style.boardCanvas}>
+          <div className={style.lists}>
+            <Composer
+              className={style.buttonAddList}
+              placeholder="Ввести заголовок списка"
+              buttonTitle="Добавить список"
+              action={addList}
+            />
+            {this.makeLists()}
+          </div>
         </div>
       </>
     );
   }
 }
 
-const mapStateToProps = (state: AppState, ownProps: Props): StateProps => ({
+const mapStateToProps = (state: AppState, ownProps: RouteProps): StateProps => ({
   board: { ...state.board.board },
   id: ownProps.match.params.id,
   inputs: { title: state.board.inputs.title },
