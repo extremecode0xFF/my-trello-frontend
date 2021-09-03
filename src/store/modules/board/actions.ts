@@ -1,10 +1,14 @@
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import api from '../../../api/request';
-import config, { IDataCard, IDataList } from '../../../common/constants/api';
+import config from '../../../common/constants/api';
 import { BoardAction, BoardActionTypes } from '../../types/board';
-import { AppState, asyncDispatch } from '../../store';
+import { AppState, asyncDispatch as storeDispatch } from '../../store';
 import history from '../../../common/history/history';
+import { showErrorNotification } from '../../../common/notifications/notifications';
+import { IDataList } from '../../../common/interfaces/IDataList';
+import { IDataCard } from '../../../common/interfaces/IDataCard';
+import { IDataCardGroup } from '../../../common/interfaces/IDataCardGroup';
 
 type ThunkType = ThunkAction<Promise<void>, AppState, unknown, BoardAction>;
 
@@ -14,58 +18,50 @@ export const getBoard = (boardId: string) => async (dispatch: Dispatch): Promise
     const board = await api.get(`${config.boards}/${boardId}`);
     dispatch({ type: BoardActionTypes.UPDATE_BOARD_SUCCESS, payload: board });
   } catch (e) {
-    dispatch({ type: BoardActionTypes.UPDATE_BOARD_ERROR, payload: 'Призошла ошибка при получении доски' });
+    showErrorNotification('Failed to get board data');
   }
 };
 
 export const setBoardTitle = (boardID: string, newTitle: string): ThunkType => async (dispatch): Promise<void> => {
   try {
-    dispatch({ type: BoardActionTypes.UPDATE_BOARD_TITLE });
     await api.put(`${config.boards}/${boardID}`, { title: newTitle });
-    dispatch({ type: BoardActionTypes.UPDATE_BOARD_TITLE_SUCCESS, payload: newTitle });
+    dispatch({ type: BoardActionTypes.UPDATE_BOARD_TITLE });
   } catch (e) {
-    dispatch({
-      type: BoardActionTypes.UPDATE_BOARD_TITLE_ERROR,
-      payload: 'Призошла ошибка при изменении заголовка доски',
-    });
+    showErrorNotification('Failed to change the board title');
   }
 };
 
 export const editBoardTitle = (title: string): void => {
-  asyncDispatch({ type: BoardActionTypes.INPUT_CHANGE, payload: title });
+  storeDispatch({ type: BoardActionTypes.INPUT_CHANGE, payload: title });
 };
 
 export const deleteBoard = (boardID: string) => async (dispatch: Dispatch<BoardAction>): Promise<void> => {
   try {
-    dispatch({ type: BoardActionTypes.DELETE_BOARD });
     await api.delete(`${config.boards}/${boardID}`);
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_SUCCESS, payload: true });
-    history.back();
+    dispatch({ type: BoardActionTypes.DELETE_BOARD });
+    history.push('/');
   } catch (e) {
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_ERROR, payload: 'Произошла ошибка при удалении доски' });
+    showErrorNotification('Failed to delete current board');
   }
 };
 
 export const addList = (boardID: string, data: IDataList): ThunkType => async (dispatch): Promise<void> => {
   try {
+    await api.post(`${config.boards}/${boardID + config.list}`, data);
     dispatch({ type: BoardActionTypes.ADD_LIST });
-    const dataWithDefaultPos = data.position ? data : { ...data, position: 1 };
-    await api.post(`${config.boards}/${boardID + config.list}`, dataWithDefaultPos);
-    dispatch({ type: BoardActionTypes.ADD_LIST_SUCCESS });
     await dispatch(getBoard(boardID));
   } catch (e) {
-    dispatch({ type: BoardActionTypes.ADD_LIST_ERROR, payload: 'Произошла ошибка при добавлении списка' });
+    showErrorNotification('Failed to add list on current board');
   }
 };
 
 export const deleteList = (boardID: string, listID: number): ThunkType => async (dispatch): Promise<void> => {
   try {
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_LIST });
     await api.delete(`${config.boards}/${boardID + config.list}/${listID}`);
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_LIST_SUCCESS });
+    dispatch({ type: BoardActionTypes.DELETE_BOARD_LIST });
     await dispatch(getBoard(boardID));
   } catch (e) {
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_LIST_ERROR, payload: 'Произошла ошибка при удалении списка' });
+    showErrorNotification('Failed to remove the specified list from the board');
   }
 };
 
@@ -73,56 +69,57 @@ export const editList = (boardID: string, listID: number, data: IDataList): Thun
   dispatch
 ): Promise<void> => {
   try {
-    dispatch({ type: BoardActionTypes.EDIT_BOARD_LIST });
-    // const dataFinal = data.position ? data : { ...data, position: 1 };
     await api.put(`${config.boards}/${boardID + config.list}/${listID}`, data);
-    dispatch({ type: BoardActionTypes.EDIT_BOARD_LIST_SUCCESS });
+    dispatch({ type: BoardActionTypes.EDIT_BOARD_LIST });
     await dispatch(getBoard(boardID));
   } catch (e) {
-    dispatch({
-      type: BoardActionTypes.EDIT_BOARD_LIST_ERROR,
-      payload: 'Произошла ошибка при изменении заголовка списка',
-    });
+    showErrorNotification('Failed to change the title of current list');
   }
 };
 
-export const addCard = (boardID: string, data: IDataCard): ThunkType => async (dispatch): Promise<void> => {
+export const addCard = (boardID: string, data: IDataCard, reloadBoard?: boolean): ThunkType => async (
+  dispatch
+): Promise<void> => {
   try {
-    dispatch({ type: BoardActionTypes.ADD_CARD });
     await api.post(`${config.boards}/${boardID + config.card}`, data);
-    dispatch({ type: BoardActionTypes.ADD_CARD_SUCCESS });
-    await dispatch(getBoard(boardID));
+    dispatch({ type: BoardActionTypes.ADD_CARD });
+    if (reloadBoard || reloadBoard === undefined) await dispatch(getBoard(boardID));
   } catch (e) {
-    dispatch({ type: BoardActionTypes.ADD_CARD_ERROR, payload: 'Произошла ошибка при добавлении карточки' });
+    showErrorNotification('Failed to add card on current list');
   }
 };
 
 export const deleteCard = (boardID: string, cardID: number): ThunkType => async (dispatch): Promise<void> => {
   try {
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_CARD });
     await api.delete(`${config.boards}/${boardID + config.card}/${cardID}`);
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_CARD_SUCCESS });
+    dispatch({ type: BoardActionTypes.DELETE_BOARD_CARD });
     await dispatch(getBoard(boardID));
   } catch (e) {
-    dispatch({ type: BoardActionTypes.DELETE_BOARD_CARD_ERROR, payload: 'Произошла ошибка при добавлении карточки' });
+    showErrorNotification('Failed to delete card on current list');
   }
 };
 
-export const editCard = (boardID: string, cardID: number, data: IDataCard): ThunkType => async (
+export const editCard = (boardID: string, cardID: number, data: IDataCard, reloadBoard?: boolean): ThunkType => async (
   dispatch
 ): Promise<void> => {
   try {
-    dispatch({ type: BoardActionTypes.EDIT_BOARD_CARD });
     await api.put(`${config.boards}/${boardID + config.card}/${cardID}`, data);
-    dispatch({ type: BoardActionTypes.EDIT_BOARD_CARD_SUCCESS });
-    await dispatch(getBoard(boardID));
+    dispatch({ type: BoardActionTypes.EDIT_BOARD_CARD });
+    if (reloadBoard || reloadBoard === undefined) await dispatch(getBoard(boardID));
   } catch (e) {
-    dispatch({
-      type: BoardActionTypes.EDIT_BOARD_CARD_ERROR,
-      payload: 'Произошла ошибка при изменении заголовка карточки',
-    });
+    showErrorNotification('Failed to change field of current card');
   }
 };
 
-export type ActionsTypeAdd = typeof addList | typeof addCard;
-export type ActionsTypeEdit = typeof editList | typeof editCard;
+export const editGroupCards = (boardID: string, data: IDataCardGroup[]): ThunkType => async (
+  dispatch
+): Promise<void> => {
+  try {
+    await api.put(`${config.boards}/${boardID + config.card}`, data);
+    dispatch({ type: BoardActionTypes.EDIT_BOARD_CARD_GROUP });
+    await dispatch(getBoard(boardID));
+  } catch (e) {
+    await dispatch(getBoard(boardID));
+    showErrorNotification('Failed to edit group cards');
+  }
+};

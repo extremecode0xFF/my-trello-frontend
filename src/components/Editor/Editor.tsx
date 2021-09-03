@@ -1,23 +1,18 @@
 import React, { ChangeEvent, FC, FocusEvent, KeyboardEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { ActionsTypeEdit, editCard, editList } from '../../store/modules/board/actions';
 import validator, { pattern } from '../../common/validator/validator';
 import style from './editor.module.scss';
 
 interface Props {
   title: string;
   placeHolder?: string;
-  entityID: number;
-  action: ActionsTypeEdit;
+  action: (text: string) => void;
+  className: string | undefined;
 }
 
-const Editor: FC<Props & React.HTMLAttributes<HTMLDivElement>> = ({ className, title, entityID, action }) => {
+const Editor: FC<Props> = ({ className, title, action }) => {
   const [isHide, setHide] = useState(false);
   const [text, setText] = useState(title);
-  const dispatch = useDispatch();
-  const { id: boardID } = useParams<{ id: string }>();
 
   const handleToggleHide = (): void => {
     setHide(!isHide);
@@ -32,25 +27,19 @@ const Editor: FC<Props & React.HTMLAttributes<HTMLDivElement>> = ({ className, t
   const handleFocusOut = (event: FocusEvent<HTMLTextAreaElement>): void => {
     if (event.target.value && event.target.value !== title) {
       setText(event.target.value.trim());
-      switch (action) {
-        case editList:
-          dispatch(editList(boardID, entityID, { title: event.target.value }));
-          break;
-        case editCard:
-          dispatch(editCard(boardID, entityID, { title: event.target.value }));
-          break;
-        default:
-      }
+      action(event.target.value);
     } else {
       setText(title);
     }
     handleToggleHide();
   };
+
   const handleClickEnter = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
       event.currentTarget.blur();
     }
   };
+
   if (!isHide) {
     return (
       <p

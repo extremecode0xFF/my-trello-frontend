@@ -1,8 +1,8 @@
 import React, { ChangeEvent, ReactElement, KeyboardEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import AutosizeInput from 'react-input-autosize';
-import { createBoard } from '../../../../../store/modules/boards/actions';
-import validator, { pattern } from '../../../../../common/validator/validator';
+import { createBoard } from '../../../store/modules/boards/actions';
+import validator, { pattern } from '../../../common/validator/validator';
 import style from './content.module.scss';
 
 export default (): ReactElement => {

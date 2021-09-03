@@ -1,28 +1,17 @@
-import React, { ChangeEvent, KeyboardEvent, FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { ActionsTypeAdd, addCard, addList } from '../../store/modules/board/actions';
+import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import validator, { pattern } from '../../common/validator/validator';
 import style from './composer.module.scss';
 
 interface Props {
+  className: string | undefined;
   buttonTitle: string;
   placeholder?: string;
-  action: ActionsTypeAdd;
-  listID?: number;
+  action: (title: string) => void;
 }
 
-const Composer: FC<Props & React.HTMLAttributes<HTMLDivElement>> = ({
-  className,
-  buttonTitle,
-  placeholder = '',
-  action,
-  listID = 0,
-}) => {
+const Composer: FC<Props> = ({ className, buttonTitle, placeholder = '', action }) => {
   const [hide, setHide] = useState(false);
   const [input, setInput] = useState('');
-  const dispatch = useDispatch();
-  const { id } = useParams<{ id: string }>();
 
   const toggleHide = (): void => {
     setHide(!hide);
@@ -30,15 +19,7 @@ const Composer: FC<Props & React.HTMLAttributes<HTMLDivElement>> = ({
   };
 
   const handlerAdd = (): void => {
-    switch (action) {
-      case addList:
-        dispatch(addList(id, { title: input }));
-        break;
-      case addCard:
-        dispatch(addCard(id, { title: input, list_id: listID }));
-        break;
-      default:
-    }
+    action(input);
     toggleHide();
   };
 

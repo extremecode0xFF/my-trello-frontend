@@ -1,28 +1,17 @@
 @import "./src/common/constants/style";
 
+$bg-color: rgba(#fff, 0.3);
+$bg-color-hover: rgba(#fff, 0.5);
+
 .header {
   display: flex;
   align-items: center;
   padding: 20px 0;
 
   & > * {
+    @extend .primaryButton;
+    height: 35px;
     margin-right: 5px;
-    font-size: 18px;
-    border-radius: 3px;
-    padding: 5px;
-    background-color: $color-board-header-default;
-    color: white;
-    cursor: pointer;
-    transition: 150ms ease-in-out;
-
-    &:hover {
-      background-color: $color-board-header-hover;
-    }
-  }
-
-  & button {
-    border: none;
-    height: 100%;
   }
 }
 
@@ -30,7 +19,7 @@
   font-weight: bold;
   border: none;
   color: white;
-  background-color: rgba($color-board-header-default, 0);
+  background-color: rgba($bg-color, 0);
   cursor: pointer;
   transition-property: padding-left, padding-right;
   transition-duration: .3s;
@@ -60,7 +49,7 @@
   grid-template-columns: repeat(4, 250px);
   grid-gap: 15px;
   //overflow-x: auto;//
-  overflow-y: hidden;
+  //overflow-y: hidden;
 
   & > button {
     height: fit-content;
@@ -74,7 +63,6 @@
 
   &::-webkit-scrollbar {
     width: 12px;
-    //background-color: #F5F5F5;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -85,15 +73,18 @@
 }
 
 .buttonAddList {
-  color: white;
-  border: none;
-  background-color: $color-board-header-default;
-  padding: 5px;
-  border-radius: 3px;
-  transition: 150ms;
+  @extend .primaryButton;
   font-size: 15px;
+}
 
-  &:hover {
-    background-color: $color-board-header-hover;
-  }
+.loaderWrap{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(black, .8);
 }

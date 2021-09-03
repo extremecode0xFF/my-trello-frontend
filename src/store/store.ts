@@ -6,12 +6,14 @@ import { UserState } from './modules/user/reducer';
 import { ModalState } from './types/modal';
 import { BoardState, initialBoardState } from './types/board';
 import { BoardsState } from './types/boards';
+import { DragNDropState, initialState as initialDragNDropState } from './types/drag';
 
 export interface AppState {
   board: BoardState;
   boards: BoardsState;
   user: UserState;
   modal: ModalState;
+  drag: DragNDropState;
 }
 
 const initialState: AppState = {
@@ -19,6 +21,7 @@ const initialState: AppState = {
   boards: { boards: [], isLoading: false, error: null },
   user: { user: [] },
   modal: { active: false },
+  drag: initialDragNDropState,
 };
 
 const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk)));

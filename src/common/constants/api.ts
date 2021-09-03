@@ -4,15 +4,5 @@ export default {
   list: '/list',
   card: '/card',
   user: '/user',
+  login: '/login',
 };
-
-export interface IDataList {
-  title: string;
-  position?: number;
-}
-
-export interface IDataCard {
-  title: string;
-  list_id?: number;
-  position?: number;
-}

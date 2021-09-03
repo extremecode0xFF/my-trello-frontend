@@ -1,7 +1,7 @@
 @import "./src/common/constants/style";
 
 .list {
-  background-color: $color-list;
+  background-color: #ebecf0;
   border-radius: 3px;
   padding: 10px 10px;
   height: fit-content;
@@ -34,12 +34,12 @@
   transition: .3s;
 
   &:hover {
-    background-color: $color-button-background-remove-hover;
+    background-color: rgba(grey, .5);
   }
 
   &:active {
-    background-color: $color-button-background-remove-active;
-    color: $color-button-remove-active;
+    background-color: rgba(9, 30, 66, .13);
+    color: #172b4d;
   }
 }
 

@@ -1,0 +1,18 @@
+@import "../../../common/constants/style";
+
+.content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  width: 25vw;
+}
+
+.text input {
+  outline-color: $color-edit;
+}
+
+.buttonCreate {
+  @extend %sendButton;
+}

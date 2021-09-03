@@ -1,13 +1,12 @@
 @import "src/common/constants/style";
 
 .board{
-  background-color: $color-boards-default;
-  //width: 100%;
+  background-color: #ebecf0;
   height: 100px;
   border-radius: 3px;
   padding: 10px;
   transition: 150ms;
   &:hover{
-    background-color: $color-boards-hover;
+    background-color: rgba(#ebecf0, .9);
   }
 }

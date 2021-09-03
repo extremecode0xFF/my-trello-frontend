@@ -2,19 +2,21 @@ import React, { ChangeEvent, Component, FocusEvent, KeyboardEvent, ReactElement 
 import AutosizeInput from 'react-input-autosize';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import { addList, deleteBoard, editBoardTitle, getBoard, setBoardTitle } from '../../store/modules/board/actions';
 import List from './components/List/List';
 import Composer from '../../components/Composer/Composer';
 import validator, { pattern } from '../../common/validator/validator';
 import { AppState } from '../../store/store';
 import { IBoardFull } from '../../common/interfaces/IBoardFull';
-import { IDataList } from '../../common/constants/api';
+import { IDataList } from '../../common/interfaces/IDataList';
 import style from './board.module.scss';
 
 interface StateProps {
   board: IBoardFull;
+  boardTitle: string;
+  isLoading: boolean;
   id: string;
-  inputs: { title: string };
 }
 
 interface DispatchProps {
@@ -72,6 +74,13 @@ class Board extends Component<PropsType> {
     dispatchDeleteBoard(this.getBoardID());
   };
 
+  handlerAddList = (title: string): void => {
+    const { board } = this.props;
+    const totalLists = Object.keys(board.lists).length;
+    const { addList: asyncAddList } = this.props;
+    asyncAddList(this.getBoardID(), { title, position: totalLists });
+  };
+
   makeLists(): ReactElement[] {
     const { board } = this.props;
     const { lists } = board;
@@ -82,10 +91,14 @@ class Board extends Component<PropsType> {
   }
 
   render(): ReactElement {
-    const {
-      inputs: { title },
-    } = this.props;
-
+    const { isLoading, boardTitle } = this.props;
+    if (isLoading) {
+      return (
+        <div className={style.loaderWrap}>
+          <Loader type="Puff" color="#00BFFF" height={100} width={100} />;
+        </div>
+      );
+    }
     return (
       <>
         <div className={style.header}>
@@ -97,7 +110,7 @@ class Board extends Component<PropsType> {
             onBlur={this.handlerFocusOut}
             onChange={this.handlerChangeTitle}
             onKeyPress={this.handlerClickEnter}
-            value={title}
+            value={boardTitle}
           />
           <a onClick={this.handlerDeleteBoard}>Удалить доску</a>
         </div>
@@ -107,7 +120,7 @@ class Board extends Component<PropsType> {
               className={style.buttonAddList}
               placeholder="Ввести заголовок списка"
               buttonTitle="Добавить список"
-              action={addList}
+              action={this.handlerAddList}
             />
             {this.makeLists()}
           </div>
@@ -119,11 +132,11 @@ class Board extends Component<PropsType> {
 
 const mapStateToProps = (state: AppState, ownProps: RouteProps): StateProps => ({
   board: { ...state.board.board },
+  boardTitle: state.board.boardTitle,
+  isLoading: state.board.isLoading,
   id: ownProps.match.params.id,
-  inputs: { title: state.board.inputs.title },
 });
 
 const mapDispatchToProps: DispatchProps = { getBoard, setBoardTitle, editBoardTitle, deleteBoard, addList };
 
-// export default connect(mapStateToProps, { getBoard })(withRouter(Board));
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Board));

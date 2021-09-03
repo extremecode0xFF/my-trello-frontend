@@ -1,16 +1,41 @@
-//BOARDS
-$color-boards-default: #ebecf0;
-$color-boards-hover: rgba($color-boards-default,.9);
-$color-button-background-remove-hover: rgba(grey, .5);
-$color-button-background-remove-active: rgba(9, 30, 66, .13);
-$color-button-remove-hover: #6b778c;
-$color-button-remove-active: #172b4d;
 //BOARD
-$color-board-header-default: rgba(#fff, 0.3);
-$color-board-header-hover: rgba($color-board-header-default, 0.5);
 $color-edit: #0079bf;
-$color-edit-hover: #026aa7;
-$color-edit-cancel: #6b778c;
-$color-edit-cancel-hover: #172b4d;
-//LIST
-$color-list: #ebecf0;
+
+.primaryButton {
+  color: white;
+  font-size: 18px;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: 150ms ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+%sendButton {
+  color: white;
+  background-color: #0079bf;
+  border-radius: 3px;
+  border: none;
+  padding: 8px;
+  transition: 150ms;
+
+  &:hover {
+    background-color: #026aa7;
+  }
+}
+
+%formErrorMessage {
+  display: block;
+  color: black;
+  font-weight: 400;
+  border: 1px solid red;
+  border-radius: 3px;
+  background-color: rgba(#db7093, .3);
+  margin: 5px 0;
+  padding: 2px;
+}

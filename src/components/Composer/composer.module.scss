@@ -8,7 +8,7 @@
 .composer {
   display: flex;
   flex-direction: column;
-  background-color: $color-list;
+  background-color: #ebecf0;
   padding: 5px;
   border-radius: 3px;
 }
@@ -24,20 +24,11 @@
 }
 
 .buttonAdd {
-  color: white;
-  background-color: $color-edit;
-  border-radius: 3px;
-  border: none;
-  padding: 8px;
-  transition: .3s;
-
-  &:hover {
-    background-color: $color-edit-hover;
-  }
+  @extend %sendButton;
 }
 
 .buttonCancel {
-  color: $color-edit-cancel;
+  color: #6b778c;
   font-size: 14px;
   border: none;
   background: none;
@@ -45,7 +36,7 @@
   transition: .3s;
 
   &:hover {
-    color: $color-edit-cancel-hover;
+    color: #172b4d;
   }
 }
 

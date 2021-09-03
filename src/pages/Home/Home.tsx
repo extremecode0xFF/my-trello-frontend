@@ -4,10 +4,10 @@ import { connect } from 'react-redux'; //
 import { AppState } from '../../store/store';
 import { IBoard } from '../../common/interfaces/IBoard';
 import Board from './components/Board/Board';
-import Modal from './components/Modal/Modal';
-import Content from './components/Modal/Content/Content';
+import Modal from '../../components/Modal/Modal';
+import CreateBoard from '../../components/Modal/CreateBoard/CreateBoard';
 import { getBoards } from '../../store/modules/boards/actions';
-import { setModalActive } from '../../store/modules/modal/action';
+import { setModalActive } from '../../store/modules/modal/actions';
 import style from './home.module.scss';
 
 type PropsType = {
@@ -52,7 +52,7 @@ class Home extends Component<PropsType> {
           </button>
           {this.makeBoards()}
           <Modal active={modal.active} setActive={setModalActive}>
-            {modal.active ? <Content /> : null}
+            <CreateBoard />
           </Modal>
         </div>
       </div>
@@ -61,9 +61,7 @@ class Home extends Component<PropsType> {
 }
 
 const mapStateToProps = (state: AppState): MapState => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const { boards } = { ...state.boards.boards };
+  const { boards } = { ...state.boards };
   return {
     boards,
     modal: state.modal,
