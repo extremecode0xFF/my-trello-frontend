@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/my-trello-frontend/static/css/main.901d3ebb.chunk.css",
-    "main.js": "/my-trello-frontend/static/js/main.a40cf7b7.chunk.js",
-    "main.js.map": "/my-trello-frontend/static/js/main.a40cf7b7.chunk.js.map",
-    "runtime-main.js": "/my-trello-frontend/static/js/runtime-main.7cc22942.js",
-    "runtime-main.js.map": "/my-trello-frontend/static/js/runtime-main.7cc22942.js.map",
-    "static/js/2.2b2f0bef.chunk.js": "/my-trello-frontend/static/js/2.2b2f0bef.chunk.js",
-    "static/js/2.2b2f0bef.chunk.js.map": "/my-trello-frontend/static/js/2.2b2f0bef.chunk.js.map",
-    "static/js/3.66bfb620.chunk.js": "/my-trello-frontend/static/js/3.66bfb620.chunk.js",
-    "static/js/3.66bfb620.chunk.js.map": "/my-trello-frontend/static/js/3.66bfb620.chunk.js.map",
+    "main.css": "/my-trello-frontend/static/css/main.f5f53a5c.chunk.css",
+    "main.js": "/my-trello-frontend/static/js/main.e1f44c99.chunk.js",
+    "main.js.map": "/my-trello-frontend/static/js/main.e1f44c99.chunk.js.map",
+    "runtime-main.js": "/my-trello-frontend/static/js/runtime-main.e5b1c406.js",
+    "runtime-main.js.map": "/my-trello-frontend/static/js/runtime-main.e5b1c406.js.map",
+    "static/css/2.d1c75e18.chunk.css": "/my-trello-frontend/static/css/2.d1c75e18.chunk.css",
+    "static/js/2.cef9eb72.chunk.js": "/my-trello-frontend/static/js/2.cef9eb72.chunk.js",
+    "static/js/2.cef9eb72.chunk.js.map": "/my-trello-frontend/static/js/2.cef9eb72.chunk.js.map",
     "index.html": "/my-trello-frontend/index.html",
-    "static/css/main.901d3ebb.chunk.css.map": "/my-trello-frontend/static/css/main.901d3ebb.chunk.css.map",
-    "static/js/2.2b2f0bef.chunk.js.LICENSE.txt": "/my-trello-frontend/static/js/2.2b2f0bef.chunk.js.LICENSE.txt"
+    "static/css/2.d1c75e18.chunk.css.map": "/my-trello-frontend/static/css/2.d1c75e18.chunk.css.map",
+    "static/css/main.f5f53a5c.chunk.css.map": "/my-trello-frontend/static/css/main.f5f53a5c.chunk.css.map",
+    "static/js/2.cef9eb72.chunk.js.LICENSE.txt": "/my-trello-frontend/static/js/2.cef9eb72.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.7cc22942.js",
-    "static/js/2.2b2f0bef.chunk.js",
-    "static/css/main.901d3ebb.chunk.css",
-    "static/js/main.a40cf7b7.chunk.js"
+    "static/js/runtime-main.e5b1c406.js",
+    "static/css/2.d1c75e18.chunk.css",
+    "static/js/2.cef9eb72.chunk.js",
+    "static/css/main.f5f53a5c.chunk.css",
+    "static/js/main.e1f44c99.chunk.js"
   ]
 }
