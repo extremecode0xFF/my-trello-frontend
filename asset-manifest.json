@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/my-trello-frontend/static/css/main.8d65199c.chunk.css",
-    "main.js": "/my-trello-frontend/static/js/main.c74e3916.chunk.js",
-    "main.js.map": "/my-trello-frontend/static/js/main.c74e3916.chunk.js.map",
+    "main.css": "/my-trello-frontend/static/css/main.c8a49bb2.chunk.css",
+    "main.js": "/my-trello-frontend/static/js/main.e8799580.chunk.js",
+    "main.js.map": "/my-trello-frontend/static/js/main.e8799580.chunk.js.map",
     "runtime-main.js": "/my-trello-frontend/static/js/runtime-main.e5b1c406.js",
     "runtime-main.js.map": "/my-trello-frontend/static/js/runtime-main.e5b1c406.js.map",
     "static/css/2.d1c75e18.chunk.css": "/my-trello-frontend/static/css/2.d1c75e18.chunk.css",
@@ -10,14 +10,14 @@
     "static/js/2.f7ba3809.chunk.js.map": "/my-trello-frontend/static/js/2.f7ba3809.chunk.js.map",
     "index.html": "/my-trello-frontend/index.html",
     "static/css/2.d1c75e18.chunk.css.map": "/my-trello-frontend/static/css/2.d1c75e18.chunk.css.map",
-    "static/css/main.8d65199c.chunk.css.map": "/my-trello-frontend/static/css/main.8d65199c.chunk.css.map",
+    "static/css/main.c8a49bb2.chunk.css.map": "/my-trello-frontend/static/css/main.c8a49bb2.chunk.css.map",
     "static/js/2.f7ba3809.chunk.js.LICENSE.txt": "/my-trello-frontend/static/js/2.f7ba3809.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e5b1c406.js",
     "static/css/2.d1c75e18.chunk.css",
     "static/js/2.f7ba3809.chunk.js",
-    "static/css/main.8d65199c.chunk.css",
-    "static/js/main.c74e3916.chunk.js"
+    "static/css/main.c8a49bb2.chunk.css",
+    "static/js/main.e8799580.chunk.js"
   ]
 }
