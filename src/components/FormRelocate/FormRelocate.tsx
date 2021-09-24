@@ -31,8 +31,6 @@ type FormData = {
   title: string;
 };
 
-type DataRelocate = { cardID: number; list_id: number; position: number; title: string };
-
 const optionBoards = (boards: IBoard[]): React.ReactElement[] => {
   return boards.map((board) => {
     return (
@@ -125,17 +123,8 @@ const createGroup = (fromList: IList, toList: IList, card: ICard, position: numb
   }
   return group;
 };
-// TODO: waiting update API.
-const relocateToAnotherBoard = (list: IList, position: number): DataRelocate[] => {
-  return Object.values(list.cards).reduce<DataRelocate[]>((acc, card) => {
-    if (card.position >= position) {
-      acc.push({ list_id: list.id, cardID: card.id, position: card.position + 1, title: card.title });
-    }
-    return acc;
-  }, []);
-};
 
-const FormRelocate: FC<Props> = ({ formTitle, buttonTitle, entity, closeModal, closeRelocate, editTitle }) => {
+const FormRelocate: FC<Props> = ({ formTitle, buttonTitle, entity, closeRelocate, editTitle }) => {
   const {
     register,
     handleSubmit,
@@ -189,12 +178,6 @@ const FormRelocate: FC<Props> = ({ formTitle, buttonTitle, entity, closeModal, c
     if (entity.boardID === +data.board) {
       if (editTitle) {
         const title = data.title.replace(/\s\s+/g, ' ');
-        // TODO: Shift cards
-        // const res = relocateToAnotherBoard(
-        //   currentBoard.lists[getValues('list') as number],
-        //   getValues('position') as number
-        // );
-        // console.log(res);
         dispatch(
           addCard(getValues('board').toString(), {
             title,

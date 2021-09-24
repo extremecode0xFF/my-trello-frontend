@@ -9,13 +9,14 @@ import { showErrorNotification } from '../../../common/notifications/notificatio
 import { IDataList } from '../../../common/interfaces/IDataList';
 import { IDataCard } from '../../../common/interfaces/IDataCard';
 import { IDataCardGroup } from '../../../common/interfaces/IDataCardGroup';
+import { IBoardFull } from '../../../common/interfaces/IBoardFull';
 
 type ThunkType = ThunkAction<Promise<void>, AppState, unknown, BoardAction>;
 
 export const getBoard = (boardId: string) => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch({ type: BoardActionTypes.UPDATE_BOARD });
-    const board = await api.get(`${config.boards}/${boardId}`);
+    const board = await api.get<IBoardFull>(`${config.boards}/${boardId}`);
     dispatch({ type: BoardActionTypes.UPDATE_BOARD_SUCCESS, payload: board });
   } catch (e) {
     showErrorNotification('Failed to get board data');

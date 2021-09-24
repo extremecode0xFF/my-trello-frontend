@@ -6,6 +6,12 @@ export interface BoardsState {
   error: null | string;
 }
 
+export const initialBoardsState: BoardsState = {
+  boards: [],
+  isLoading: false,
+  error: null,
+};
+
 export enum BoardsActionTypes {
   UPDATE_BOARDS = 'UPDATE_BOARDS',
   UPDATE_BOARDS_SUCCESS = 'UPDATE_BOARDS_SUCCESS',

@@ -49,7 +49,9 @@ export default function List(props: IList): ReactElement {
       <div className={style.header}>
         <Editor className={style.title} title={title} action={editTitleHandler} />
         <button className={style.buttonRemoveList} onClick={handleClickDeleteList}>
-          <span className={`material-icons ${style.icon}`}>delete_forever</span>
+          <span className={`material-icons ${style.icon}`} title="Удалить список">
+            delete_forever
+          </span>
         </button>
       </div>
       <ul className={style.cards}>{makeCard()}</ul>

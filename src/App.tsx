@@ -8,28 +8,31 @@ import EditCard from './components/Modal/EditCard/EditCard';
 import { useTypedSelector } from './hooks/useTypedSelector';
 import { Registration } from './pages/Registration/Registration';
 import Authorization from './pages/Authorization/Authorization';
-import { ProtectedRoute, ProtectedRouteProps } from './components/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute, { ProtectedRouteProps } from './components/ProtectedRoute/ProtectedRoute';
 import { getToken } from './api/request';
+
+const getAuthorizedProps = (): ProtectedRouteProps => ({
+  redirectPath: '/login',
+  isAuthenticated: !getToken(),
+});
+
+const getUnauthorizedProps = (): ProtectedRouteProps => ({
+  redirectPath: '/',
+  isAuthenticated: !!getToken(),
+});
 
 export default function App(): ReactElement {
   const { state } = useLocation<{ cardID: number }>();
   const boardState = useTypedSelector((value) => value.board.board);
-  const authorized: ProtectedRouteProps = {
-    redirectPath: '/login',
-    isAuthenticated: !getToken(),
-  };
-  const unauthorized: ProtectedRouteProps = {
-    redirectPath: '/',
-    isAuthenticated: !!getToken(),
-  };
+
   return (
     <div className="container">
       <ReactNotification />
       <Switch>
-        <ProtectedRoute path="/signup" {...unauthorized} component={Registration} />
-        <ProtectedRoute path="/login" {...unauthorized} component={Authorization} />
-        <ProtectedRoute path="/board/:id" {...authorized} component={Board} />
-        <ProtectedRoute path="/" {...authorized} component={Home} />
+        <ProtectedRoute path="/signup" {...getUnauthorizedProps()} component={Registration} />
+        <ProtectedRoute path="/login" {...getUnauthorizedProps()} component={Authorization} />
+        <ProtectedRoute path="/board/:id" {...getAuthorizedProps()} component={Board} />
+        <ProtectedRoute path="/" {...getAuthorizedProps()} component={Home} />
       </Switch>
       {state?.cardID && boardState?.title ? <Route exact path="/board/:id/card/:cardID" component={EditCard} /> : null}
     </div>

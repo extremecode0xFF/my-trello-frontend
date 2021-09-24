@@ -14,7 +14,7 @@ const Composer: FC<Props> = ({ className, buttonTitle, placeholder = '', action 
   const [input, setInput] = useState('');
 
   const toggleHide = (): void => {
-    setHide(!hide);
+    setHide((prevState) => !prevState);
     setInput('');
   };
 
@@ -35,28 +35,28 @@ const Composer: FC<Props> = ({ className, buttonTitle, placeholder = '', action 
     }
   };
 
-  return (
-    <div className={style.wrapper}>
-      <button className={hide ? [className, style.hide].join(' ') : className} onClick={toggleHide}>
-        + {buttonTitle}
-      </button>
-      <div className={hide ? style.composer : [style.composer, style.hide].join(' ')}>
-        <textarea
-          className={style.textArea}
-          ref={(field): null | void => field && field.focus()}
-          placeholder={placeholder}
-          value={input}
-          onKeyPress={onKeyPressEnter}
-          onChange={handleChangeText}
-        />
-        <div className={style.control}>
-          <button className={style.buttonAdd} onClick={handlerAdd}>
-            Добавить
-          </button>
-          <button className={style.buttonCancel} onClick={toggleHide}>
-            Отмена
-          </button>
-        </div>
+  return !hide ? (
+    <button className={[className, style.buttonActive].join(' ')} onClick={toggleHide}>
+      <span className="material-icons-round md-18">add</span>
+      {buttonTitle}
+    </button>
+  ) : (
+    <div className={style.composer}>
+      <textarea
+        className={style.textArea}
+        ref={(field): null | void => field && field.focus()}
+        placeholder={placeholder}
+        value={input}
+        onKeyPress={onKeyPressEnter}
+        onChange={handleChangeText}
+      />
+      <div className={style.control}>
+        <button className={style.buttonAdd} onClick={handlerAdd}>
+          Добавить
+        </button>
+        <button className={style.buttonCancel} onClick={toggleHide}>
+          Отмена
+        </button>
       </div>
     </div>
   );

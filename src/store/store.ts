@@ -2,10 +2,10 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { rootReducer } from './rootReducer';
-import { UserState } from './modules/user/reducer';
+import { UserState, initialUserState } from './types/user';
 import { ModalState } from './types/modal';
 import { BoardState, initialBoardState } from './types/board';
-import { BoardsState } from './types/boards';
+import { BoardsState, initialBoardsState } from './types/boards';
 import { DragNDropState, initialState as initialDragNDropState } from './types/drag';
 
 export interface AppState {
@@ -18,8 +18,8 @@ export interface AppState {
 
 const initialState: AppState = {
   board: initialBoardState,
-  boards: { boards: [], isLoading: false, error: null },
-  user: { user: [] },
+  boards: initialBoardsState,
+  user: initialUserState,
   modal: { active: false },
   drag: initialDragNDropState,
 };

@@ -18,12 +18,13 @@ export const admission = axios.create({
 });
 
 instance.interceptors.request.use((requestConfig) => {
-  // eslint-disable-next-line no-param-reassign
-  requestConfig.headers.Authorization = `Bearer ${getToken()}`;
-  if (!getToken()) {
+  const modifyRequestConfig = { ...requestConfig };
+  if (getToken()) {
+    modifyRequestConfig.headers.Authorization = `Bearer ${getToken()}`;
+  } else {
     history.push('/login');
   }
-  return requestConfig;
+  return modifyRequestConfig;
 });
 
 instance.interceptors.response.use(

@@ -98,7 +98,9 @@ const Card: FC<ICard & PropsParent> = (props) => {
         className={!hover || slot?.card ? [style.buttonRemove, style.hide].join(' ') : style.buttonRemove}
         onClick={handleClickDelete}
       >
-        <span className={`material-icons-round ${style.icon}`}>delete_forever</span>
+        <span className={`material-icons-round ${style.icon}`} title="Удалить карточку">
+          delete_forever
+        </span>
       </button>
     </div>
   );

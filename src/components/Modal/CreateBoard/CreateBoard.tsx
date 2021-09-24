@@ -1,6 +1,5 @@
-import React, { ChangeEvent, ReactElement, KeyboardEvent, useState } from 'react';
+import React, { ChangeEvent, ReactElement, KeyboardEvent, useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import AutosizeInput from 'react-input-autosize';
 import { createBoard } from '../../../store/modules/boards/actions';
 import validator, { pattern } from '../../../common/validator/validator';
 import style from './content.module.scss';
@@ -8,6 +7,13 @@ import style from './content.module.scss';
 export default (): ReactElement => {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
+  const refInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (refInput.current) {
+      refInput.current.select();
+    }
+  }, []);
 
   const onChangeInput = (event: ChangeEvent<HTMLInputElement>): void => {
     const inputText = event.target.value;
@@ -31,15 +37,14 @@ export default (): ReactElement => {
   return (
     <div className={style.content}>
       <h3>Создание новой доски</h3>
-      <AutosizeInput
-        injectStyles
+      <input
         className={style.text}
-        autoFocus
-        placeholder="Добавить заголовок доски"
+        ref={refInput}
+        placeholder="Введите заголовок доски..."
         type="text"
         value={text}
-        onKeyPress={handlePressEnter}
         onChange={onChangeInput}
+        onKeyPress={handlePressEnter}
       />
       <button className={style.buttonCreate} onClick={onAddBoard}>
         Создать доску

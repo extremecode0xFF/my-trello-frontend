@@ -39,3 +39,9 @@ $color-edit: #0079bf;
   margin: 5px 0;
   padding: 2px;
 }
+
+%inputField {
+  &:focus-visible {
+    outline-color: #0079bf;
+  }
+}

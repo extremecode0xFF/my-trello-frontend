@@ -1,8 +1,12 @@
 import React, { CSSProperties, ReactElement } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { deleteToken, getToken } from '../../api/request';
-import history from '../../common/history/history';
+import { connect, ConnectedProps } from 'react-redux';
+import { getToken } from '../../api/request';
 import '../../common/constants/style.scss';
+import { RootState } from '../../store/rootReducer';
+import { UserState } from '../../store/types/user';
+import { logout } from '../../store/modules/user/actions';
+import { asyncDispatch } from '../../store/store';
 
 export interface ProtectedRouteProps extends RouteProps {
   isAuthenticated: boolean;
@@ -15,7 +19,7 @@ const wrapperLogOut: CSSProperties = {
   justifyContent: 'flex-end',
 };
 
-export class ProtectedRoute extends Route<ProtectedRouteProps> {
+class ProtectedRoute extends Route<ProtectedRouteProps & PropsFromRedux> {
   render(): ReactElement {
     let redirectPath = '';
     if (this.props.isAuthenticated) {
@@ -23,8 +27,9 @@ export class ProtectedRoute extends Route<ProtectedRouteProps> {
     }
 
     const onClickLogOut = (): void => {
-      deleteToken();
-      history.push('/login');
+      asyncDispatch(logout());
+      // deleteToken();
+      // history.push('/login');
     };
 
     if (redirectPath) {
@@ -46,3 +51,13 @@ export class ProtectedRoute extends Route<ProtectedRouteProps> {
     );
   }
 }
+
+const mapState = (state: RootState): Omit<UserState, 'isLoading'> => ({
+  isAuthorized: state.user.isAuthorized,
+});
+
+const connector = connect(mapState);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ProtectedRoute);

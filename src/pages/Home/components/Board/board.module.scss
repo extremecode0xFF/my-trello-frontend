@@ -6,6 +6,8 @@
   border-radius: 3px;
   padding: 10px;
   transition: 150ms;
+  word-break: break-word;
+  overflow: hidden;
   &:hover{
     background-color: rgba(#ebecf0, .9);
   }

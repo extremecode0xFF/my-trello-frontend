@@ -1,11 +1,12 @@
 import React, { useEffect, VoidFunctionComponent } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import api from '../../common/constants/api';
-import { admission, setToken } from '../../api/request';
+import { useDispatch } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import { IAdmission } from '../../common/interfaces/IAdmission';
-import history from '../../common/history/history';
+import { login } from '../../store/modules/user/actions';
 import style from './authorization.module.scss';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 interface FormData {
   email: string;
@@ -19,6 +20,8 @@ enum ErrorFormMessage {
 }
 
 const Authorization: VoidFunctionComponent = () => {
+  const dispatch = useDispatch();
+  const stateUser = useTypedSelector((state) => state.user);
   const {
     register,
     handleSubmit,
@@ -32,17 +35,12 @@ const Authorization: VoidFunctionComponent = () => {
     clearErrors('submit');
   }, [watch('email')]);
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit((data) => {
     const user: IAdmission = { email: data.email, password: data.password };
-    await admission
-      .post<unknown, { token: string }>(api.login, user)
-      .then((value) => {
-        setToken(value.token);
-        history.push('/');
-      })
-      .catch(() => {
-        setError('submit', { message: ErrorFormMessage.INVALID_DATA });
-      });
+    const error = (): void => {
+      setError('submit', { message: ErrorFormMessage.INVALID_DATA });
+    };
+    dispatch(login(user, error));
   });
 
   return (
@@ -80,6 +78,10 @@ const Authorization: VoidFunctionComponent = () => {
           <Link className={style.link} to="/signup">
             Зарегестрироваться
           </Link>
+        </div>
+
+        <div className={style.loaderWrapper}>
+          <Loader type="Oval" color="#00BFFF" height={50} width={50} visible={stateUser.isLoading} />
         </div>
       </form>
     </div>

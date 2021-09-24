@@ -1,15 +1,23 @@
-export interface UserState {
-  user: [];
-}
+import { initialUserState, UserState, UserAction, UserActionTypes } from '../../types/user';
 
-const initialState: UserState = {
-  user: [],
-};
-
-export default function reducer(state = initialState, action: { type: string }): UserState {
+export default function reducer(state = initialUserState, action: UserAction): UserState {
   switch (action.type) {
+    case UserActionTypes.LOGIN:
+      return { ...state, isLoading: true };
+    case UserActionTypes.LOGIN_SUCCESS:
+      return { ...state, isLoading: false, isAuthorized: true };
+    case UserActionTypes.LOGIN_ERROR:
+      return { ...state, isLoading: false };
+    case UserActionTypes.SIGNUP:
+      return { ...state, isLoading: true };
+    case UserActionTypes.SIGNUP_SUCCESS:
+      return { ...state, isLoading: false };
+    case UserActionTypes.SIGNUP_ERROR:
+      return { ...state, isLoading: false };
+    case UserActionTypes.LOGOUT:
+      return { ...state, isAuthorized: false };
     default: {
-      return { ...state };
+      return state;
     }
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'; //
+import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import { AppState } from '../../store/store';
 import { IBoard } from '../../common/interfaces/IBoard';
 import Board from './components/Board/Board';
@@ -10,19 +11,20 @@ import { getBoards } from '../../store/modules/boards/actions';
 import { setModalActive } from '../../store/modules/modal/actions';
 import style from './home.module.scss';
 
-type PropsType = {
-  boards: IBoard[];
-  modal: { active: boolean };
-  getBoards: () => Promise<void>;
+type MapDispatch = {
+  getBoards: () => void;
   setModalActive: (value: boolean) => void;
 };
 
-interface MapState {
+type MapState = {
   boards: IBoard[];
   modal: { active: boolean };
-}
+  isLoading: boolean;
+};
 
-class Home extends Component<PropsType> {
+type Props = MapState & MapDispatch;
+
+class Home extends Component<Props> {
   async componentDidMount(): Promise<void> {
     const { getBoards: asyncGetBoards } = this.props;
     await asyncGetBoards();
@@ -42,7 +44,14 @@ class Home extends Component<PropsType> {
   }
 
   render(): ReactElement {
-    const { modal } = this.props;
+    const { modal, isLoading } = this.props;
+    if (isLoading) {
+      return (
+        <div className={style.loaderWrap}>
+          <Loader type="Puff" color="#00BFFF" height={100} width={100} />;
+        </div>
+      );
+    }
     return (
       <div className={style.wrapper}>
         <h2 className={style.title}>Мои Доски</h2>
@@ -61,11 +70,14 @@ class Home extends Component<PropsType> {
 }
 
 const mapStateToProps = (state: AppState): MapState => {
-  const { boards } = { ...state.boards };
+  const { boards, isLoading } = { ...state.boards };
   return {
     boards,
+    isLoading,
     modal: state.modal,
   };
 };
 
-export default connect(mapStateToProps, { getBoards, setModalActive })(Home);
+const mapDispatchToProps: MapDispatch = { getBoards, setModalActive };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

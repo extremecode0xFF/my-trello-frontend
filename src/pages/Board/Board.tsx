@@ -114,15 +114,16 @@ class Board extends Component<PropsType> {
           />
           <a onClick={this.handlerDeleteBoard}>Удалить доску</a>
         </div>
-        <div className={style.boardCanvas}>
-          <div className={style.lists}>
+
+        <div className={style.lists}>
+          {this.makeLists()}
+          <div style={{ width: '250px', flex: '0 0 auto' }}>
             <Composer
               className={style.buttonAddList}
               placeholder="Ввести заголовок списка"
               buttonTitle="Добавить список"
               action={this.handlerAddList}
             />
-            {this.makeLists()}
           </div>
         </div>
       </>
